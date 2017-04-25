@@ -22,7 +22,8 @@ namespace EHR
             webBrowser1.ScrollBarsEnabled = false;
 
             // When the form loads, open this web page.
-            webBrowser1.Navigate("http://www.google.com/");
+            //webBrowser1.Navigate("http://www.google.com/");
+            webBrowser1.Navigate("http://localhost:3000/");
         }
     }
 }

@@ -24,12 +24,40 @@ namespace EHR
 
             // When the form loads, open this web page.
             //webBrowser1.Navigate("http://www.google.com/");
-            webBrowser1.Navigate("http://localhost:3000/");
+            //webBrowser1.Navigate("http://localhost:3000/1");
+
+            comboBoxPatients.SelectedIndex = 0;
+
+            SetControlsBasedOnPatient();
         }
 
         private void comboBoxPatients_SelectedIndexChanged(object sender, EventArgs e)
         {
+            SetControlsBasedOnPatient();
 
+            switch (comboBoxPatients.SelectedIndex + 1)
+            {
+                case 1:
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    break;
+
+            }
+        }
+
+        private void SetControlsBasedOnPatient()
+        {
+            var patientName = Convert.ToString(comboBoxPatients.SelectedItem);
+
+            labelPatientName.Text = patientName;
+
+            labelMedication.Text = $@"Medications for {patientName}";
+
+            webBrowser1.Navigate($"http://localhost:3000/{comboBoxPatients.SelectedIndex + 1}");
         }
     }
 }

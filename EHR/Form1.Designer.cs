@@ -31,12 +31,13 @@
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.labelPatientName = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.comboBoxPatients = new System.Windows.Forms.ComboBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.labelMedication = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.comboBoxPatients = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -49,6 +50,7 @@
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // webBrowser1
@@ -92,6 +94,19 @@
             this.splitContainer1.Size = new System.Drawing.Size(1002, 712);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // comboBoxPatients
+            // 
+            this.comboBoxPatients.FormattingEnabled = true;
+            this.comboBoxPatients.Items.AddRange(new object[] {
+            "Jones, James",
+            "Smith, Bob",
+            "Connor, Lisa H"});
+            this.comboBoxPatients.Location = new System.Drawing.Point(27, 67);
+            this.comboBoxPatients.Name = "comboBoxPatients";
+            this.comboBoxPatients.Size = new System.Drawing.Size(266, 28);
+            this.comboBoxPatients.TabIndex = 2;
+            this.comboBoxPatients.SelectedIndexChanged += new System.EventHandler(this.comboBoxPatients_SelectedIndexChanged);
             // 
             // splitContainer2
             // 
@@ -147,6 +162,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.labelMedication);
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -154,6 +170,15 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Medications";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // labelMedication
+            // 
+            this.labelMedication.AutoSize = true;
+            this.labelMedication.Location = new System.Drawing.Point(99, 62);
+            this.labelMedication.Name = "labelMedication";
+            this.labelMedication.Size = new System.Drawing.Size(119, 20);
+            this.labelMedication.TabIndex = 0;
+            this.labelMedication.Text = "labelMedication";
             // 
             // tabPage2
             // 
@@ -164,20 +189,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Physical Exam";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxPatients
-            // 
-            this.comboBoxPatients.FormattingEnabled = true;
-            this.comboBoxPatients.Items.AddRange(new object[] {
-            "Jones, James",
-            "Smith, Bob",
-            "Connor, Lisa H"});
-            this.comboBoxPatients.Location = new System.Drawing.Point(27, 67);
-            this.comboBoxPatients.Name = "comboBoxPatients";
-            this.comboBoxPatients.Size = new System.Drawing.Size(266, 28);
-            this.comboBoxPatients.TabIndex = 2;
-            this.comboBoxPatients.Text = "Choose Patient";
-            this.comboBoxPatients.SelectedIndexChanged += new System.EventHandler(this.comboBoxPatients_SelectedIndexChanged);
             // 
             // Form1
             // 
@@ -201,6 +212,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -216,6 +229,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ComboBox comboBoxPatients;
+        private System.Windows.Forms.Label labelMedication;
     }
 }
 

@@ -57,7 +57,7 @@ namespace EHR
 
             labelMedication.Text = $@"Medications for {patientName}";
 
-            webBrowser1.Navigate($"http://localhost:3000/{comboBoxPatients.SelectedIndex + 1}");
+            webBrowser1.Navigate($"http://localhost:3000/fabricpane/{comboBoxPatients.SelectedIndex + 1}");
         }
     }
 }

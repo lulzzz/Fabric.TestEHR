@@ -12,10 +12,34 @@ namespace EHR
 {
     public partial class Form1 : Form
     {
+        readonly List<string> _patients = new List<string>
+        {
+            "Jones, James",
+            "Brown, Joe",
+            "Kane, Liam"
+        };
+
         public Form1()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            this.findPatientToolStripMenuItem.DropDownItemClicked += FindPatientToolStripMenuItem_DropDownItemClicked;
+
+            foreach (var item in _patients )
+            {
+                this.findPatientToolStripMenuItem.DropDownItems.Add(new ToolStripMenuItem
+                {
+                    Name = "toolStripMenuItem1",
+                    Size = new System.Drawing.Size(211, 30),
+                    Text = item
+                });
+            }
+            
+        }
+
+        private void FindPatientToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            SetControlsBasedOnPatient(e.ClickedItem.Text);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -26,38 +50,23 @@ namespace EHR
             //webBrowser1.Navigate("http://www.google.com/");
             //webBrowser1.Navigate("http://localhost:3000/1");
 
-            comboBoxPatients.SelectedIndex = 0;
-
-            SetControlsBasedOnPatient();
+            SetControlsBasedOnPatient(_patients[0]);
         }
 
-        private void comboBoxPatients_SelectedIndexChanged(object sender, EventArgs e)
+        private void SetControlsBasedOnPatient(string clickedItemText)
         {
-            SetControlsBasedOnPatient();
-
-            switch (comboBoxPatients.SelectedIndex + 1)
-            {
-                case 1:
-                    break;
-
-                case 2:
-                    break;
-
-                case 3:
-                    break;
-
-            }
-        }
-
-        private void SetControlsBasedOnPatient()
-        {
-            var patientName = Convert.ToString(comboBoxPatients.SelectedItem);
+            var patientName = Convert.ToString(clickedItemText);
 
             labelPatientName.Text = patientName;
 
             labelMedication.Text = $@"Medications for {patientName}";
 
-            webBrowser1.Navigate($"http://localhost:3000/fabricpane/{comboBoxPatients.SelectedIndex + 1}");
+            int selectedPatientId =  _patients.IndexOf(clickedItemText) + 1;
+            switch (clickedItemText)
+            {
+                    
+            }
+            webBrowser1.Navigate($"http://localhost:3000/fabricpane/{selectedPatientId}");
         }
     }
 }

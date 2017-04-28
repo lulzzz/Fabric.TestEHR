@@ -31,7 +31,14 @@
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.labelPatientName = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.comboBoxPatients = new System.Windows.Forms.ComboBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.activityListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findPatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.inboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bookmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -42,6 +49,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
@@ -59,7 +67,7 @@
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(296, 608);
+            this.webBrowser1.Size = new System.Drawing.Size(296, 786);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.Url = new System.Uri("http://www.google.com", System.UriKind.Absolute);
             // 
@@ -67,7 +75,8 @@
             // 
             this.labelPatientName.AutoSize = true;
             this.labelPatientName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPatientName.Location = new System.Drawing.Point(21, 31);
+            this.labelPatientName.ForeColor = System.Drawing.SystemColors.Control;
+            this.labelPatientName.Location = new System.Drawing.Point(114, 44);
             this.labelPatientName.Name = "labelPatientName";
             this.labelPatientName.Size = new System.Drawing.Size(358, 32);
             this.labelPatientName.TabIndex = 1;
@@ -85,28 +94,74 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.splitContainer1.Panel1.Controls.Add(this.comboBoxPatients);
             this.splitContainer1.Panel1.Controls.Add(this.labelPatientName);
+            this.splitContainer1.Panel1.Controls.Add(this.menuStrip1);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1002, 712);
+            this.splitContainer1.Size = new System.Drawing.Size(1224, 890);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 2;
             // 
-            // comboBoxPatients
+            // menuStrip1
             // 
-            this.comboBoxPatients.FormattingEnabled = true;
-            this.comboBoxPatients.Items.AddRange(new object[] {
-            "Jones, James",
-            "Smith, Bob",
-            "Connor, Lisa H"});
-            this.comboBoxPatients.Location = new System.Drawing.Point(27, 67);
-            this.comboBoxPatients.Name = "comboBoxPatients";
-            this.comboBoxPatients.Size = new System.Drawing.Size(266, 28);
-            this.comboBoxPatients.TabIndex = 2;
-            this.comboBoxPatients.SelectedIndexChanged += new System.EventHandler(this.comboBoxPatients_SelectedIndexChanged);
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.homeToolStripMenuItem,
+            this.activityListToolStripMenuItem,
+            this.findPatientToolStripMenuItem,
+            this.inboxToolStripMenuItem,
+            this.bookmarkToolStripMenuItem,
+            this.reportsToolStripMenuItem,
+            this.preferencesToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1224, 33);
+            this.menuStrip1.TabIndex = 3;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // homeToolStripMenuItem
+            // 
+            this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(73, 29);
+            this.homeToolStripMenuItem.Text = "Home";
+            // 
+            // activityListToolStripMenuItem
+            // 
+            this.activityListToolStripMenuItem.Name = "activityListToolStripMenuItem";
+            this.activityListToolStripMenuItem.Size = new System.Drawing.Size(113, 29);
+            this.activityListToolStripMenuItem.Text = "Activity List";
+            // 
+            // findPatientToolStripMenuItem
+            // 
+            this.findPatientToolStripMenuItem.Name = "findPatientToolStripMenuItem";
+            this.findPatientToolStripMenuItem.Size = new System.Drawing.Size(116, 29);
+            this.findPatientToolStripMenuItem.Text = "Find Patient";
+            // 
+            // inboxToolStripMenuItem
+            // 
+            this.inboxToolStripMenuItem.Name = "inboxToolStripMenuItem";
+            this.inboxToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
+            this.inboxToolStripMenuItem.Text = "Inbox";
+            // 
+            // bookmarkToolStripMenuItem
+            // 
+            this.bookmarkToolStripMenuItem.Name = "bookmarkToolStripMenuItem";
+            this.bookmarkToolStripMenuItem.Size = new System.Drawing.Size(105, 29);
+            this.bookmarkToolStripMenuItem.Text = "Bookmark";
+            // 
+            // reportsToolStripMenuItem
+            // 
+            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(85, 29);
+            this.reportsToolStripMenuItem.Text = "Reports";
+            // 
+            // preferencesToolStripMenuItem
+            // 
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(114, 29);
+            this.preferencesToolStripMenuItem.Text = "Preferences";
             // 
             // splitContainer2
             // 
@@ -124,7 +179,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer2.Size = new System.Drawing.Size(1002, 608);
+            this.splitContainer2.Size = new System.Drawing.Size(1224, 786);
             this.splitContainer2.SplitterDistance = 100;
             this.splitContainer2.TabIndex = 1;
             // 
@@ -145,8 +200,8 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.webBrowser1);
             this.splitContainer3.Panel2MinSize = 150;
-            this.splitContainer3.Size = new System.Drawing.Size(898, 608);
-            this.splitContainer3.SplitterDistance = 598;
+            this.splitContainer3.Size = new System.Drawing.Size(1120, 786);
+            this.splitContainer3.SplitterDistance = 820;
             this.splitContainer3.TabIndex = 1;
             // 
             // tabControl1
@@ -157,7 +212,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(598, 608);
+            this.tabControl1.Size = new System.Drawing.Size(820, 786);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -166,7 +221,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(590, 575);
+            this.tabPage1.Size = new System.Drawing.Size(812, 753);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Medications";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -185,7 +240,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(590, 575);
+            this.tabPage2.Size = new System.Drawing.Size(812, 753);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Physical Exam";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -194,16 +249,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 712);
+            this.ClientSize = new System.Drawing.Size(1224, 890);
             this.Controls.Add(this.splitContainer1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Your EHR";
+            this.Text = "Myopic";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
@@ -228,8 +286,15 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ComboBox comboBoxPatients;
         private System.Windows.Forms.Label labelMedication;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem homeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem activityListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem findPatientToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem inboxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bookmarkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
     }
 }
 

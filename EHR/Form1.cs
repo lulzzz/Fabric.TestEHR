@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -66,7 +67,10 @@ namespace EHR
             {
                     
             }
-            webBrowser1.Navigate($"http://localhost:3000/fabricpane/{selectedPatientId}");
+
+            var urlToFabricEhr = ConfigurationManager.AppSettings["UrlToFabricEhr"];
+
+            webBrowser1.Navigate($"{urlToFabricEhr}{selectedPatientId}");
         }
     }
 }

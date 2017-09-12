@@ -16,7 +16,7 @@ namespace EHR
         readonly List<string> _patients = new List<string>
         {
             "Jones, James",
-            "Brown, Joe",
+            "Brown, Jolene",
             "Kane, Liam"
         };
 

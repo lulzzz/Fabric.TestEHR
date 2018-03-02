@@ -14,7 +14,7 @@ namespace EHR
 {
     public partial class Form1 : Form
     {
-        private readonly SynchronizationContext synchronizationContext;
+        private readonly SynchronizationContext _synchronizationContext;
 
         readonly List<string> _patients = new List<string>
         {
@@ -23,10 +23,16 @@ namespace EHR
             "Kane, Liam"
         };
 
+        readonly string _patientId = ConfigurationManager.AppSettings["FacilityAccountId"];
+        string PatientIdForAdt => _patientId.PadRight(20, '^');
+
+        private readonly BatchRunner _batchRunner = new BatchRunner();
+
+
         public Form1()
         {
             InitializeComponent();
-            synchronizationContext = SynchronizationContext.Current;
+            _synchronizationContext = SynchronizationContext.Current;
 
             this.WindowState = FormWindowState.Maximized;
             this.findPatientToolStripMenuItem.DropDownItemClicked += FindPatientToolStripMenuItem_DropDownItemClicked;
@@ -76,6 +82,9 @@ namespace EHR
             var urlToFabricEhr = ConfigurationManager.AppSettings["UrlToFabricEhr"];
 
             // webBrowser1.Navigate($"{urlToFabricEhr}{selectedPatientId}");
+
+
+            UpdatePatientRisk();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -83,13 +92,13 @@ namespace EHR
 
         }
 
-        string patientId = "P41043000^^^&OID&ISO".PadRight(20);
-
         private async void buttonSaveVitals_Click(object sender, EventArgs e)
         {
             var o2sat = numericO2Sat.Value;
             var pulse = numericPulse.Value;
+            var temp = numericTemp.Value;
 
+            string admitDateTime = DateTime.Now.AddMinutes(-10).ToString("yyyyMMddHHmmss");
             string currentDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -98,11 +107,11 @@ namespace EHR
                 @"
 MSH|^~\&|App1^AppId^ISO|SendingFac^SendingFacId^ISO|ReceivingApp^ReceivingAppId^ISO|ReceivingFac^ReceivingFacId^ISO|2007509101832132||ADT^A01^ADT_A01|200760910183213200723|D|2.5
 EVN||2007509101832132
-PID|1||" + patientId + @"||||196505|M|||^^^OR^97007
-PV1|1|I||||||||||||||||||||||||||||||||||||||||||200750816122536
+PID|1||" + PatientIdForAdt + @"||||196505|M|||^^^OR^97007
+PV1|1|I||||||||||||||||||||||||||||||||||||||||||" + admitDateTime + @"
 PV2|||^^^^POSSIBLE MENINGITIS OR CVA
 OBX|1|CE|SPO2||" + o2sat + @"|%||||N|F|" + currentDate + @"|| " + currentDateTime + @"|BN
-OBX|2|CE|TEMPF||103|Degrees F||||N|F|20180301|| 20180301155800|BN
+OBX|2|CE|TEMPF||" + temp + @"|Degrees F||||N|F|20180301|| " + currentDateTime + @"|BN
 OBX|3|CE|RR||9|/min||||N|F|20180301|| 20180301155800|BN
 OBX|4|CE|PNN50||0.47|%||||N|F|20180301|| 20180301155800|BN
 OBX|5|CE|HR||107|/min||||N|F|20180301|| 20180301155800|BN
@@ -118,23 +127,43 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
             HL7Sender.SendHL7(server, port, hl7Message);
 
             var batchDefinitionId = ConfigurationManager.AppSettings["BatchDefinitionId"];
+            var singleBindingBatchDefinitionId = ConfigurationManager.AppSettings["SingleBindingBatchDefinitionId"];
 
-            await new BatchRunner().RunBatch(Convert.ToInt32(batchDefinitionId));
+            await Task.WhenAll(
+                _batchRunner.RunBatch("EW Sepsis SAM", Convert.ToInt32(batchDefinitionId))
+                    .ContinueWith(async a =>
+                        await _batchRunner.WaitForBatch("EW Sepsis SAM", a.Result)
+                            .ContinueWith(b => _batchRunner.RunBatch("ERisk Binding", Convert.ToInt32(singleBindingBatchDefinitionId))
+                                .ContinueWith(async c =>
+                                    await _batchRunner.WaitForBatch("Risk Binding SAM", c.Result)))
+                    )
+                , Task.Run(() => LoopToUpdateUI())
+            );
 
-            await Task.Run(() =>
-            {
-                for (var i = 0; i <= 5000000; i++)
-                {
-                    UpdateUI(i);
-                    Thread.Sleep(1000);
-                }
-            });
+            //await Task.Run(async () =>
+            //{
+            //    Thread.Sleep(30 * 1000);
+            //    await RunSingleBinding();
+            //});
+
+            // await Task.Run(() => { LoopToUpdateUI(); });
 
         }
 
+        // ReSharper disable once InconsistentNaming
+        private void LoopToUpdateUI()
+        {
+            for (var i = 0; i <= 5000000; i++)
+            {
+                UpdateUI(i);
+                Thread.Sleep(1000);
+            }
+        }
+
+        // ReSharper disable once InconsistentNaming
         public void UpdateUI(int value)
         {
-            var dt = new SqlLoader().LoadPatient("500041410");
+            var dt = new SqlLoader().LoadPatient(_patientId);
 
             if (dt.Rows.Count > 0)
             {
@@ -142,7 +171,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
 
                 var now = DateTime.Now;
 
-                synchronizationContext.Post(new SendOrPostCallback(o =>
+                _synchronizationContext.Post(new SendOrPostCallback(o =>
                 {
                     labelRiskScore.Text = row["PredictedProbNBR"].ToString();
                     labelFactor1.Text = row["Factor1TXT"].ToString();
@@ -150,6 +179,17 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
                     labelFactor3.Text = row["Factor3TXT"].ToString();
                     labelLastCalculatedDate.Text = row["LastCalculatedDTS"].ToString();
                     labelLastChecked.Text = now.ToLongTimeString();
+                    labelStatus.Text = _batchRunner.GetStatus();
+                }), value);
+            }
+            else
+            {
+                var now = DateTime.Now;
+
+                _synchronizationContext.Post(new SendOrPostCallback(o =>
+                {
+                    labelLastChecked.Text = now.ToLongTimeString();
+                    labelStatus.Text = _batchRunner.GetStatus();
                 }), value);
 
             }
@@ -157,7 +197,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
 
         private void UpdatePatientRisk()
         {
-            var dt = new SqlLoader().LoadPatient("500041410");
+            var dt = new SqlLoader().LoadPatient(_patientId);
 
             if (dt.Rows.Count > 0)
             {
@@ -174,5 +214,12 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
         {
             UpdatePatientRisk();
         }
+
+        private async void buttonRunEngine_Click(object sender, EventArgs e)
+        {
+            //await RunSingleBinding();
+        }
+
+
     }
 }

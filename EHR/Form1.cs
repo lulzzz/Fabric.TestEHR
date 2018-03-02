@@ -113,5 +113,25 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
             HL7Sender.SendHL7(server, port, hl7Message);
 
         }
+
+        private void UpdatePatientRisk()
+        {
+            var dt = new SqlLoader().LoadPatient("500041410");
+
+            if (dt.Rows.Count > 0)
+            {
+                var row = dt.Rows[0];
+                labelRiskScore.Text = row["PredictedProbNBR"].ToString();
+                labelFactor1.Text = row["Factor1TXT"].ToString();
+                labelFactor2.Text = row["Factor2TXT"].ToString();
+                labelFactor3.Text = row["Factor3TXT"].ToString();
+                labelLastCalculatedDate.Text = row["LastCalculatedDTS"].ToString();
+            }
+        }
+
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            UpdatePatientRisk();
+        }
     }
 }

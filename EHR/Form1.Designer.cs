@@ -46,11 +46,17 @@
             this.labelMedication = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.numericO2Sat = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.numericPulse = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
             this.buttonSaveVitals = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericPulse = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericO2Sat = new System.Windows.Forms.NumericUpDown();
+            this.labelRiskScore = new System.Windows.Forms.Label();
+            this.labelFactor1 = new System.Windows.Forms.Label();
+            this.labelFactor2 = new System.Windows.Forms.Label();
+            this.labelFactor3 = new System.Windows.Forms.Label();
+            this.labelLastCalculatedDate = new System.Windows.Forms.Label();
+            this.buttonRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -66,8 +72,8 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPulse)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).BeginInit();
             this.SuspendLayout();
             // 
             // webBrowser1
@@ -257,6 +263,12 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.buttonRefresh);
+            this.tabPage3.Controls.Add(this.labelLastCalculatedDate);
+            this.tabPage3.Controls.Add(this.labelFactor3);
+            this.tabPage3.Controls.Add(this.labelFactor2);
+            this.tabPage3.Controls.Add(this.labelFactor1);
+            this.tabPage3.Controls.Add(this.labelRiskScore);
             this.tabPage3.Controls.Add(this.buttonSaveVitals);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.numericPulse);
@@ -270,31 +282,25 @@
             this.tabPage3.Text = "Vitals";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // numericO2Sat
+            // buttonSaveVitals
             // 
-            this.numericO2Sat.Location = new System.Drawing.Point(280, 66);
-            this.numericO2Sat.Minimum = new decimal(new int[] {
-            80,
-            0,
-            0,
-            0});
-            this.numericO2Sat.Name = "numericO2Sat";
-            this.numericO2Sat.Size = new System.Drawing.Size(84, 26);
-            this.numericO2Sat.TabIndex = 0;
-            this.numericO2Sat.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
+            this.buttonSaveVitals.Location = new System.Drawing.Point(254, 206);
+            this.buttonSaveVitals.Name = "buttonSaveVitals";
+            this.buttonSaveVitals.Size = new System.Drawing.Size(110, 30);
+            this.buttonSaveVitals.TabIndex = 4;
+            this.buttonSaveVitals.Text = "Save";
+            this.buttonSaveVitals.UseVisualStyleBackColor = true;
+            this.buttonSaveVitals.Click += new System.EventHandler(this.buttonSaveVitals_Click);
             // 
-            // label1
+            // label2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(203, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 20);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "O2 Sat";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(203, 133);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 20);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Pulse";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // numericPulse
             // 
@@ -313,25 +319,86 @@
             0,
             0});
             // 
-            // label2
+            // label1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(203, 133);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 20);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Pulse";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(203, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 20);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "O2 Sat";
             // 
-            // buttonSaveVitals
+            // numericO2Sat
             // 
-            this.buttonSaveVitals.Location = new System.Drawing.Point(254, 206);
-            this.buttonSaveVitals.Name = "buttonSaveVitals";
-            this.buttonSaveVitals.Size = new System.Drawing.Size(110, 30);
-            this.buttonSaveVitals.TabIndex = 4;
-            this.buttonSaveVitals.Text = "Save";
-            this.buttonSaveVitals.UseVisualStyleBackColor = true;
-            this.buttonSaveVitals.Click += new System.EventHandler(this.buttonSaveVitals_Click);
+            this.numericO2Sat.Location = new System.Drawing.Point(280, 66);
+            this.numericO2Sat.Minimum = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            this.numericO2Sat.Name = "numericO2Sat";
+            this.numericO2Sat.Size = new System.Drawing.Size(84, 26);
+            this.numericO2Sat.TabIndex = 0;
+            this.numericO2Sat.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // labelRiskScore
+            // 
+            this.labelRiskScore.AutoSize = true;
+            this.labelRiskScore.Location = new System.Drawing.Point(559, 65);
+            this.labelRiskScore.Name = "labelRiskScore";
+            this.labelRiskScore.Size = new System.Drawing.Size(115, 20);
+            this.labelRiskScore.TabIndex = 5;
+            this.labelRiskScore.Text = "labelRiskScore";
+            // 
+            // labelFactor1
+            // 
+            this.labelFactor1.AutoSize = true;
+            this.labelFactor1.Location = new System.Drawing.Point(559, 127);
+            this.labelFactor1.Name = "labelFactor1";
+            this.labelFactor1.Size = new System.Drawing.Size(97, 20);
+            this.labelFactor1.TabIndex = 6;
+            this.labelFactor1.Text = "labelFactor1";
+            // 
+            // labelFactor2
+            // 
+            this.labelFactor2.AutoSize = true;
+            this.labelFactor2.Location = new System.Drawing.Point(559, 167);
+            this.labelFactor2.Name = "labelFactor2";
+            this.labelFactor2.Size = new System.Drawing.Size(97, 20);
+            this.labelFactor2.TabIndex = 7;
+            this.labelFactor2.Text = "labelFactor2";
+            // 
+            // labelFactor3
+            // 
+            this.labelFactor3.AutoSize = true;
+            this.labelFactor3.Location = new System.Drawing.Point(559, 206);
+            this.labelFactor3.Name = "labelFactor3";
+            this.labelFactor3.Size = new System.Drawing.Size(97, 20);
+            this.labelFactor3.TabIndex = 8;
+            this.labelFactor3.Text = "labelFactor3";
+            // 
+            // labelLastCalculatedDate
+            // 
+            this.labelLastCalculatedDate.AutoSize = true;
+            this.labelLastCalculatedDate.Location = new System.Drawing.Point(563, 510);
+            this.labelLastCalculatedDate.Name = "labelLastCalculatedDate";
+            this.labelLastCalculatedDate.Size = new System.Drawing.Size(183, 20);
+            this.labelLastCalculatedDate.TabIndex = 9;
+            this.labelLastCalculatedDate.Text = "labelLastCalculatedDate";
+            // 
+            // buttonRefresh
+            // 
+            this.buttonRefresh.Location = new System.Drawing.Point(567, 548);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(89, 39);
+            this.buttonRefresh.TabIndex = 10;
+            this.buttonRefresh.Text = "Refresh";
+            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // Form1
             // 
@@ -362,8 +429,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPulse)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -393,6 +460,12 @@
         private System.Windows.Forms.NumericUpDown numericPulse;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonSaveVitals;
+        private System.Windows.Forms.Label labelFactor1;
+        private System.Windows.Forms.Label labelRiskScore;
+        private System.Windows.Forms.Label labelFactor3;
+        private System.Windows.Forms.Label labelFactor2;
+        private System.Windows.Forms.Label labelLastCalculatedDate;
+        private System.Windows.Forms.Button buttonRefresh;
     }
 }
 

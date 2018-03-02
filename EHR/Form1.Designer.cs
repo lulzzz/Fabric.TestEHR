@@ -45,6 +45,12 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.labelMedication = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.numericO2Sat = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericPulse = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonSaveVitals = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -59,6 +65,9 @@
             this.splitContainer3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericPulse)).BeginInit();
             this.SuspendLayout();
             // 
             // webBrowser1
@@ -69,7 +78,7 @@
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.Size = new System.Drawing.Size(296, 786);
             this.webBrowser1.TabIndex = 0;
-            this.webBrowser1.Url = new System.Uri("http://www.google.com", System.UriKind.Absolute);
+            this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
             // 
             // labelPatientName
             // 
@@ -208,6 +217,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -245,6 +255,84 @@
             this.tabPage2.Text = "Physical Exam";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.buttonSaveVitals);
+            this.tabPage3.Controls.Add(this.label2);
+            this.tabPage3.Controls.Add(this.numericPulse);
+            this.tabPage3.Controls.Add(this.label1);
+            this.tabPage3.Controls.Add(this.numericO2Sat);
+            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(812, 753);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Vitals";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // numericO2Sat
+            // 
+            this.numericO2Sat.Location = new System.Drawing.Point(280, 66);
+            this.numericO2Sat.Minimum = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            this.numericO2Sat.Name = "numericO2Sat";
+            this.numericO2Sat.Size = new System.Drawing.Size(84, 26);
+            this.numericO2Sat.TabIndex = 0;
+            this.numericO2Sat.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(203, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 20);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "O2 Sat";
+            // 
+            // numericPulse
+            // 
+            this.numericPulse.Location = new System.Drawing.Point(280, 127);
+            this.numericPulse.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericPulse.Name = "numericPulse";
+            this.numericPulse.Size = new System.Drawing.Size(84, 26);
+            this.numericPulse.TabIndex = 2;
+            this.numericPulse.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(203, 133);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 20);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Pulse";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // buttonSaveVitals
+            // 
+            this.buttonSaveVitals.Location = new System.Drawing.Point(254, 206);
+            this.buttonSaveVitals.Name = "buttonSaveVitals";
+            this.buttonSaveVitals.Size = new System.Drawing.Size(110, 30);
+            this.buttonSaveVitals.TabIndex = 4;
+            this.buttonSaveVitals.Text = "Save";
+            this.buttonSaveVitals.UseVisualStyleBackColor = true;
+            this.buttonSaveVitals.Click += new System.EventHandler(this.buttonSaveVitals_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -272,6 +360,10 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericPulse)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -295,6 +387,12 @@
         private System.Windows.Forms.ToolStripMenuItem bookmarkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericO2Sat;
+        private System.Windows.Forms.NumericUpDown numericPulse;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonSaveVitals;
     }
 }
 

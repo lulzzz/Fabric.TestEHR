@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,6 +14,8 @@ namespace EHR
 {
     public partial class Form1 : Form
     {
+        private readonly SynchronizationContext synchronizationContext;
+
         readonly List<string> _patients = new List<string>
         {
             "Jones, James",
@@ -23,6 +26,8 @@ namespace EHR
         public Form1()
         {
             InitializeComponent();
+            synchronizationContext = SynchronizationContext.Current;
+
             this.WindowState = FormWindowState.Maximized;
             this.findPatientToolStripMenuItem.DropDownItemClicked += FindPatientToolStripMenuItem_DropDownItemClicked;
 
@@ -80,7 +85,7 @@ namespace EHR
 
         string patientId = "P41043000^^^&OID&ISO".PadRight(20);
 
-        private void buttonSaveVitals_Click(object sender, EventArgs e)
+        private async void buttonSaveVitals_Click(object sender, EventArgs e)
         {
             var o2sat = numericO2Sat.Value;
             var pulse = numericPulse.Value;
@@ -112,6 +117,37 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
             var port = 6661;
             HL7Sender.SendHL7(server, port, hl7Message);
 
+            await Task.Run(() =>
+            {
+                for (var i = 0; i <= 5000000; i++)
+                {
+                    UpdateUI(i);
+                    Thread.Sleep(1000);
+                }
+            });
+        }
+
+        public void UpdateUI(int value)
+        {
+            var dt = new SqlLoader().LoadPatient("500041410");
+
+            if (dt.Rows.Count > 0)
+            {
+                var row = dt.Rows[0];
+
+                var now = DateTime.Now;
+
+                synchronizationContext.Post(new SendOrPostCallback(o =>
+                {
+                    labelRiskScore.Text = row["PredictedProbNBR"].ToString();
+                    labelFactor1.Text = row["Factor1TXT"].ToString();
+                    labelFactor2.Text = row["Factor2TXT"].ToString();
+                    labelFactor3.Text = row["Factor3TXT"].ToString();
+                    labelLastCalculatedDate.Text = row["LastCalculatedDTS"].ToString();
+                    labelLastChecked.Text = now.ToLongTimeString();
+                }), value);
+
+            }
         }
 
         private void UpdatePatientRisk()

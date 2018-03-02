@@ -57,6 +57,7 @@
             this.labelFactor3 = new System.Windows.Forms.Label();
             this.labelLastCalculatedDate = new System.Windows.Forms.Label();
             this.buttonRefresh = new System.Windows.Forms.Button();
+            this.labelLastChecked = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -263,6 +264,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.labelLastChecked);
             this.tabPage3.Controls.Add(this.buttonRefresh);
             this.tabPage3.Controls.Add(this.labelLastCalculatedDate);
             this.tabPage3.Controls.Add(this.labelFactor3);
@@ -384,7 +386,7 @@
             // labelLastCalculatedDate
             // 
             this.labelLastCalculatedDate.AutoSize = true;
-            this.labelLastCalculatedDate.Location = new System.Drawing.Point(563, 510);
+            this.labelLastCalculatedDate.Location = new System.Drawing.Point(559, 330);
             this.labelLastCalculatedDate.Name = "labelLastCalculatedDate";
             this.labelLastCalculatedDate.Size = new System.Drawing.Size(183, 20);
             this.labelLastCalculatedDate.TabIndex = 9;
@@ -392,13 +394,22 @@
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(567, 548);
+            this.buttonRefresh.Location = new System.Drawing.Point(554, 257);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(89, 39);
             this.buttonRefresh.TabIndex = 10;
             this.buttonRefresh.Text = "Refresh";
             this.buttonRefresh.UseVisualStyleBackColor = true;
             this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            // 
+            // labelLastChecked
+            // 
+            this.labelLastChecked.AutoSize = true;
+            this.labelLastChecked.Location = new System.Drawing.Point(563, 576);
+            this.labelLastChecked.Name = "labelLastChecked";
+            this.labelLastChecked.Size = new System.Drawing.Size(136, 20);
+            this.labelLastChecked.TabIndex = 11;
+            this.labelLastChecked.Text = "labelLastChecked";
             // 
             // Form1
             // 
@@ -466,6 +477,7 @@
         private System.Windows.Forms.Label labelFactor2;
         private System.Windows.Forms.Label labelLastCalculatedDate;
         private System.Windows.Forms.Button buttonRefresh;
+        private System.Windows.Forms.Label labelLastChecked;
     }
 }
 

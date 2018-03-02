@@ -117,6 +117,10 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
             var port = 6661;
             HL7Sender.SendHL7(server, port, hl7Message);
 
+            var batchDefinitionId = ConfigurationManager.AppSettings["BatchDefinitionId"];
+
+            await new BatchRunner().RunBatch(Convert.ToInt32(batchDefinitionId));
+
             await Task.Run(() =>
             {
                 for (var i = 0; i <= 5000000; i++)
@@ -125,6 +129,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
                     Thread.Sleep(1000);
                 }
             });
+
         }
 
         public void UpdateUI(int value)

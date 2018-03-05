@@ -26,8 +26,8 @@ namespace EHR
         readonly string _patientId = ConfigurationManager.AppSettings["FacilityAccountId"];
         string PatientIdForAdt => _patientId.PadRight(20, '^');
 
-        private readonly BatchRunner _batchRunner = new BatchRunner();
-
+        private static ConsoleLogger _logger = new ConsoleLogger();
+        private readonly BatchRunner _batchRunner = new BatchRunner(_logger);
 
         public Form1()
         {
@@ -62,7 +62,7 @@ namespace EHR
             //webBrowser1.Navigate("http://www.google.com/");
             //webBrowser1.Navigate("http://localhost:3000/1");
 
-            SetControlsBasedOnPatient(_patients[0]);
+            SetControlsBasedOnPatient(_patientId);
         }
 
         private void SetControlsBasedOnPatient(string clickedItemText)
@@ -73,16 +73,17 @@ namespace EHR
 
             labelMedication.Text = $@"Medications for {patientName}";
 
-            int selectedPatientId = _patients.IndexOf(clickedItemText) + 1;
-            switch (clickedItemText)
-            {
+            string selectedPatientId = _patientId;
 
-            }
+            //int selectedPatientId = _patients.IndexOf(clickedItemText) + 1;
+            //switch (clickedItemText)
+            //{
+
+            //}
 
             var urlToFabricEhr = ConfigurationManager.AppSettings["UrlToFabricEhr"];
 
-            // webBrowser1.Navigate($"{urlToFabricEhr}{selectedPatientId}");
-
+            webBrowser1.Navigate($"{urlToFabricEhr}{selectedPatientId}");
 
             UpdatePatientRisk();
         }
@@ -124,6 +125,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
 
             var server = "localhost";
             var port = 6661;
+            _logger.AddStatus("Sending HL7 message");
             HL7Sender.SendHL7(server, port, hl7Message);
 
             var batchDefinitionId = ConfigurationManager.AppSettings["BatchDefinitionId"];
@@ -133,9 +135,9 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
                 _batchRunner.RunBatch("EW Sepsis SAM", Convert.ToInt32(batchDefinitionId))
                     .ContinueWith(async a =>
                         await _batchRunner.WaitForBatch("EW Sepsis SAM", a.Result)
-                            .ContinueWith(b => _batchRunner.RunBatch("ERisk Binding", Convert.ToInt32(singleBindingBatchDefinitionId))
-                                .ContinueWith(async c =>
-                                    await _batchRunner.WaitForBatch("Risk Binding SAM", c.Result)))
+                            //.ContinueWith(b => _batchRunner.RunBatch("ERisk Binding", Convert.ToInt32(singleBindingBatchDefinitionId))
+                            //    .ContinueWith(async c =>
+                            //        await _batchRunner.WaitForBatch("Risk Binding SAM", c.Result)))
                     )
                 , Task.Run(() => LoopToUpdateUI())
             );
@@ -179,7 +181,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
                     labelFactor3.Text = row["Factor3TXT"].ToString();
                     labelLastCalculatedDate.Text = row["LastCalculatedDTS"].ToString();
                     labelLastChecked.Text = now.ToLongTimeString();
-                    labelStatus.Text = _batchRunner.GetStatus();
+                    labelStatus.Text = _logger.GetStatus();
                 }), value);
             }
             else
@@ -189,7 +191,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
                 _synchronizationContext.Post(new SendOrPostCallback(o =>
                 {
                     labelLastChecked.Text = now.ToLongTimeString();
-                    labelStatus.Text = _batchRunner.GetStatus();
+                    labelStatus.Text = _logger.GetStatus();
                 }), value);
 
             }

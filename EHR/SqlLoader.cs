@@ -17,7 +17,7 @@ namespace EHR
 
             SqlConnection conn = new SqlConnection(settings.ConnectionString);
 
-            string sql = "SELECT TOP 1 FacilityAccountID, PredictedProbNBR, Factor1TXT,Factor2TXT,Factor3TXT,LastCalculatedDTS FROM Sepsis.EWSSummaryPatientRiskBASENew where FacilityAccountID = @facilityAccountId ORDER BY LastCalculatedDTS DESC";
+            string sql = "SELECT TOP 1 FacilityAccountID, PredictedProbNBR, Factor1TXT,Factor2TXT,Factor3TXT,LastCalculatedDTS FROM Sepsis.EWSPredictionsBASE where FacilityAccountID = @facilityAccountId ORDER BY LastCalculatedDTS DESC";
 
             SqlCommand cmdRisk = new SqlCommand(sql, conn);
             cmdRisk.Parameters.Add(new SqlParameter("@facilityAccountId", SqlDbType.VarChar));

@@ -212,7 +212,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
         {
             var dt = new SqlLoader().LoadPatient(_patientId);
 
-            if (dt.Rows.Count > 0)
+            if (dt?.Rows != null && dt.Rows.Count > 0)
             {
                 var row = dt.Rows[0];
                 labelRiskScore.Text = row["PredictedProbNBR"].ToString();

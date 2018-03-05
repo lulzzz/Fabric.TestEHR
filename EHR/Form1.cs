@@ -25,6 +25,10 @@ namespace EHR
 
         readonly string _patientId = ConfigurationManager.AppSettings["FacilityAccountId"];
         string PatientIdForAdt => _patientId.PadRight(20, '^');
+        private string ewSepsisDataMartName = ConfigurationManager.AppSettings["EWSepsisDataMartName"];
+
+
+        string batchDefinitionId = null;
 
         private static ConsoleLogger _logger = new ConsoleLogger();
         private readonly BatchRunner _batchRunner = new BatchRunner(_logger);
@@ -54,7 +58,7 @@ namespace EHR
             SetControlsBasedOnPatient(e.ClickedItem.Text);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
             webBrowser1.ScrollBarsEnabled = false;
 
@@ -63,6 +67,10 @@ namespace EHR
             //webBrowser1.Navigate("http://localhost:3000/1");
 
             SetControlsBasedOnPatient(_patientId);
+
+            var dataMartIdByName = await _batchRunner.GetDataMartIDByName(ewSepsisDataMartName);
+            batchDefinitionId = await _batchRunner.GetBatchDefinitionForDatamart(dataMartIdByName);
+
         }
 
         private void SetControlsBasedOnPatient(string clickedItemText)
@@ -73,6 +81,13 @@ namespace EHR
 
             labelMedication.Text = $@"Medications for {patientName}";
 
+            UpdateFabricPane();
+
+            UpdatePatientRisk();
+        }
+
+        private void UpdateFabricPane()
+        {
             string selectedPatientId = _patientId;
 
             //int selectedPatientId = _patients.IndexOf(clickedItemText) + 1;
@@ -84,8 +99,6 @@ namespace EHR
             var urlToFabricEhr = ConfigurationManager.AppSettings["UrlToFabricEhr"];
 
             webBrowser1.Navigate($"{urlToFabricEhr}{selectedPatientId}");
-
-            UpdatePatientRisk();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -128,13 +141,11 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
             _logger.AddStatus("Sending HL7 message");
             HL7Sender.SendHL7(server, port, hl7Message);
 
-            var batchDefinitionId = ConfigurationManager.AppSettings["BatchDefinitionId"];
-            var singleBindingBatchDefinitionId = ConfigurationManager.AppSettings["SingleBindingBatchDefinitionId"];
-
             await Task.WhenAll(
                 _batchRunner.RunBatch("EW Sepsis SAM", Convert.ToInt32(batchDefinitionId))
                     .ContinueWith(async a =>
                         await _batchRunner.WaitForBatch("EW Sepsis SAM", a.Result)
+                            .ContinueWith(b => UpdateFabricPane())
                             //.ContinueWith(b => _batchRunner.RunBatch("ERisk Binding", Convert.ToInt32(singleBindingBatchDefinitionId))
                             //    .ContinueWith(async c =>
                             //        await _batchRunner.WaitForBatch("Risk Binding SAM", c.Result)))
@@ -217,7 +228,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
             UpdatePatientRisk();
         }
 
-        private async void buttonRunEngine_Click(object sender, EventArgs e)
+        private void buttonRunEngine_Click(object sender, EventArgs e)
         {
             //await RunSingleBinding();
         }

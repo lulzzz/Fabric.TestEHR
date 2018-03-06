@@ -43,9 +43,14 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
             this.labelMedication = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.buttonRunEngine = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numericTemp = new System.Windows.Forms.NumericUpDown();
             this.labelLastChecked = new System.Windows.Forms.Label();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.labelLastCalculatedDate = new System.Windows.Forms.Label();
@@ -58,10 +63,6 @@
             this.numericPulse = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.numericO2Sat = new System.Windows.Forms.NumericUpDown();
-            this.numericTemp = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.buttonRunEngine = new System.Windows.Forms.Button();
-            this.labelStatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -77,9 +78,9 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPulse)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericTemp)).BeginInit();
             this.SuspendLayout();
             // 
             // webBrowser1
@@ -239,6 +240,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.labelMedication);
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
@@ -247,6 +249,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Medications";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(628, 304);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(181, 20);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "SMART on FHIR App ->";
             // 
             // labelMedication
             // 
@@ -292,6 +304,62 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Vitals";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.Location = new System.Drawing.Point(31, 339);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(56, 20);
+            this.labelStatus.TabIndex = 15;
+            this.labelStatus.Text = "Status";
+            // 
+            // buttonRunEngine
+            // 
+            this.buttonRunEngine.Location = new System.Drawing.Point(668, 482);
+            this.buttonRunEngine.Name = "buttonRunEngine";
+            this.buttonRunEngine.Size = new System.Drawing.Size(106, 43);
+            this.buttonRunEngine.TabIndex = 14;
+            this.buttonRunEngine.Text = "Run Engine";
+            this.buttonRunEngine.UseVisualStyleBackColor = true;
+            this.buttonRunEngine.Click += new System.EventHandler(this.buttonRunEngine_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(207, 183);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(49, 20);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Temp";
+            // 
+            // numericTemp
+            // 
+            this.numericTemp.DecimalPlaces = 1;
+            this.numericTemp.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericTemp.Location = new System.Drawing.Point(280, 183);
+            this.numericTemp.Maximum = new decimal(new int[] {
+            110,
+            0,
+            0,
+            0});
+            this.numericTemp.Minimum = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            this.numericTemp.Name = "numericTemp";
+            this.numericTemp.Size = new System.Drawing.Size(84, 26);
+            this.numericTemp.TabIndex = 12;
+            this.numericTemp.Value = new decimal(new int[] {
+            986,
+            0,
+            0,
+            65536});
             // 
             // labelLastChecked
             // 
@@ -420,62 +488,6 @@
             0,
             0});
             // 
-            // numericTemp
-            // 
-            this.numericTemp.DecimalPlaces = 1;
-            this.numericTemp.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.numericTemp.Location = new System.Drawing.Point(280, 183);
-            this.numericTemp.Maximum = new decimal(new int[] {
-            110,
-            0,
-            0,
-            0});
-            this.numericTemp.Minimum = new decimal(new int[] {
-            80,
-            0,
-            0,
-            0});
-            this.numericTemp.Name = "numericTemp";
-            this.numericTemp.Size = new System.Drawing.Size(84, 26);
-            this.numericTemp.TabIndex = 12;
-            this.numericTemp.Value = new decimal(new int[] {
-            986,
-            0,
-            0,
-            65536});
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(207, 183);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 20);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "Temp";
-            // 
-            // buttonRunEngine
-            // 
-            this.buttonRunEngine.Location = new System.Drawing.Point(668, 482);
-            this.buttonRunEngine.Name = "buttonRunEngine";
-            this.buttonRunEngine.Size = new System.Drawing.Size(106, 43);
-            this.buttonRunEngine.TabIndex = 14;
-            this.buttonRunEngine.Text = "Run Engine";
-            this.buttonRunEngine.UseVisualStyleBackColor = true;
-            this.buttonRunEngine.Click += new System.EventHandler(this.buttonRunEngine_Click);
-            // 
-            // labelStatus
-            // 
-            this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(31, 339);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(56, 20);
-            this.labelStatus.TabIndex = 15;
-            this.labelStatus.Text = "Status";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -505,9 +517,9 @@
             this.tabPage1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericTemp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPulse)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericTemp)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -548,6 +560,7 @@
         private System.Windows.Forms.NumericUpDown numericTemp;
         private System.Windows.Forms.Button buttonRunEngine;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Label label4;
     }
 }
 

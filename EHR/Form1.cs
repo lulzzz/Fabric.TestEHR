@@ -16,15 +16,8 @@ namespace EHR
     {
         private readonly SynchronizationContext _synchronizationContext;
 
-        readonly List<string> _patients = new List<string>
-        {
-            "Jones, James",
-            "Brown, Jolene",
-            "Kane, Liam"
-        };
+        private readonly List<Patient> _patients = new List<Patient>();
 
-        readonly string _patientId = ConfigurationManager.AppSettings["FacilityAccountId"];
-        string PatientIdForAdt => _patientId.PadRight(20, '^');
         private string ewSepsisDataMartName = ConfigurationManager.AppSettings["EWSepsisDataMartName"];
 
 
@@ -32,6 +25,7 @@ namespace EHR
 
         private static ConsoleLogger _logger = new ConsoleLogger();
         private readonly BatchRunner _batchRunner = new BatchRunner(_logger);
+        private Patient _currentPatient;
 
         public Form1()
         {
@@ -41,21 +35,44 @@ namespace EHR
             this.WindowState = FormWindowState.Maximized;
             this.findPatientToolStripMenuItem.DropDownItemClicked += FindPatientToolStripMenuItem_DropDownItemClicked;
 
+            _patients.Add(new Patient
+            {
+                FacilityAccountId = ConfigurationManager.AppSettings["FacilityAccountId1"],
+                Name = "Jones, James",
+            });
+            _patients.Add(new Patient
+            {
+                FacilityAccountId = ConfigurationManager.AppSettings["FacilityAccountId2"],
+                Name = "Brown, Jolene",
+            });
+            _patients.Add(new Patient
+            {
+                FacilityAccountId = ConfigurationManager.AppSettings["FacilityAccountId3"],
+                Name = "Whitfield, Bill",
+            });
+
             foreach (var item in _patients)
             {
                 this.findPatientToolStripMenuItem.DropDownItems.Add(new ToolStripMenuItem
                 {
                     Name = "toolStripMenuItem1",
                     Size = new System.Drawing.Size(211, 30),
-                    Text = item
+                    Text = item.Name,
+                    Tag = item.FacilityAccountId
                 });
             }
 
+            this.labelRiskScore.Visible = false;
+            labelFactor1.Visible = false;
+            labelFactor2.Visible = false;
+            labelFactor3.Visible = false;
+            buttonRefresh.Visible = false;
+            buttonRunEngine.Visible = false;
         }
 
         private void FindPatientToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            SetControlsBasedOnPatient(e.ClickedItem.Text);
+            SetControlsBasedOnPatient(e.ClickedItem.Text, e.ClickedItem.Tag);
         }
 
         private async void Form1_Load(object sender, EventArgs e)
@@ -66,29 +83,33 @@ namespace EHR
             //webBrowser1.Navigate("http://www.google.com/");
             //webBrowser1.Navigate("http://localhost:3000/1");
 
-            SetControlsBasedOnPatient(_patientId);
+            SetControlsBasedOnPatient(_patients[0].Name, _patients[0].FacilityAccountId);
 
             var dataMartIdByName = await _batchRunner.GetDataMartIDByName(ewSepsisDataMartName);
             batchDefinitionId = await _batchRunner.GetBatchDefinitionForDatamart(dataMartIdByName);
 
         }
 
-        private void SetControlsBasedOnPatient(string clickedItemText)
+        private void SetControlsBasedOnPatient(string clickedItemText, object clickedItemTag)
         {
             var patientName = Convert.ToString(clickedItemText);
 
+            // var facilityAccountId = Convert.ToString(clickedItemTag);
+
+            _currentPatient = _patients.First(p => p.Name == patientName);
+
             labelPatientName.Text = patientName;
 
-            labelMedication.Text = $@"Medications for {patientName}";
+            labelMedication.Text = @"This would be your EMR e.g., Epic, Cerner etc";
 
-            UpdateFabricPane();
+            UpdateFabricPane("load");
 
             UpdatePatientRisk();
         }
 
-        private void UpdateFabricPane()
+        private void UpdateFabricPane(string action)
         {
-            string selectedPatientId = _patientId;
+            string selectedPatientId = _currentPatient.FacilityAccountId;
 
             //int selectedPatientId = _patients.IndexOf(clickedItemText) + 1;
             //switch (clickedItemText)
@@ -98,7 +119,7 @@ namespace EHR
 
             var urlToFabricEhr = ConfigurationManager.AppSettings["UrlToFabricEhr"];
 
-            webBrowser1.Navigate($"{urlToFabricEhr}{selectedPatientId}");
+            webBrowser1.Navigate($"{urlToFabricEhr}{selectedPatientId}/{action}");
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -116,6 +137,7 @@ namespace EHR
             string currentDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
             string currentDate = DateTime.Now.ToString("yyyyMMdd");
 
+            string PatientIdForAdt = _currentPatient.FacilityAccountId.PadRight(20, '^');
 
             string hl7Message =
                 @"
@@ -141,11 +163,13 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
             _logger.AddStatus("Sending HL7 message");
             HL7Sender.SendHL7(server, port, hl7Message);
 
+            UpdateFabricPane("calculating");
+
             await Task.WhenAll(
                 _batchRunner.RunBatch("EW Sepsis SAM", Convert.ToInt32(batchDefinitionId))
                     .ContinueWith(async a =>
                         await _batchRunner.WaitForBatch("EW Sepsis SAM", a.Result)
-                            .ContinueWith(b => UpdateFabricPane())
+                            .ContinueWith(b => UpdateFabricPane("load"))
                             //.ContinueWith(b => _batchRunner.RunBatch("ERisk Binding", Convert.ToInt32(singleBindingBatchDefinitionId))
                             //    .ContinueWith(async c =>
                             //        await _batchRunner.WaitForBatch("Risk Binding SAM", c.Result)))
@@ -176,7 +200,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
         // ReSharper disable once InconsistentNaming
         public void UpdateUI(int value)
         {
-            var dt = new SqlLoader().LoadPatient(_patientId);
+            var dt = new SqlLoader().LoadPatient(_currentPatient.FacilityAccountId);
 
             if (dt.Rows.Count > 0)
             {
@@ -210,7 +234,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
 
         private void UpdatePatientRisk()
         {
-            var dt = new SqlLoader().LoadPatient(_patientId);
+            var dt = new SqlLoader().LoadPatient(_currentPatient.FacilityAccountId);
 
             if (dt?.Rows != null && dt.Rows.Count > 0)
             {

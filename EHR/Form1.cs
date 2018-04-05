@@ -78,6 +78,7 @@ namespace EHR
         private async void Form1_Load(object sender, EventArgs e)
         {
             webBrowser1.ScrollBarsEnabled = false;
+            webBrowserMosaic.ScrollBarsEnabled = false;
 
             // When the form loads, open this web page.
             //webBrowser1.Navigate("http://www.google.com/");

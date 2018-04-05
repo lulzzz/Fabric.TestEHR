@@ -66,6 +66,7 @@
             this.bookmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.webBrowserMosaic = new System.Windows.Forms.WebBrowser();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -85,6 +86,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).BeginInit();
             this.tabControlTopLevel.SuspendLayout();
             this.tabPageChart.SuspendLayout();
+            this.tabPageWorklist.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -467,6 +469,7 @@
             // 
             this.tabControlTopLevel.Controls.Add(this.tabPageChart);
             this.tabControlTopLevel.Controls.Add(this.tabPageWorklist);
+            //this.tabControlTopLevel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlTopLevel.Location = new System.Drawing.Point(0, 43);
             this.tabControlTopLevel.Name = "tabControlTopLevel";
             this.tabControlTopLevel.SelectedIndex = 0;
@@ -486,7 +489,9 @@
             // 
             // tabPageWorklist
             // 
+            this.tabPageWorklist.Controls.Add(this.webBrowserMosaic);
             this.tabPageWorklist.Location = new System.Drawing.Point(8, 39);
+
             this.tabPageWorklist.Name = "tabPageWorklist";
             this.tabPageWorklist.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageWorklist.Size = new System.Drawing.Size(1628, 1007);
@@ -554,6 +559,16 @@
             this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(151, 36);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             // 
+            // webBrowserMosaic
+            // 
+            this.webBrowserMosaic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowserMosaic.Location = new System.Drawing.Point(3, 3);
+            this.webBrowserMosaic.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserMosaic.Name = "webBrowserMosaic";
+            this.webBrowserMosaic.Size = new System.Drawing.Size(1622, 1001);
+            this.webBrowserMosaic.TabIndex = 0;
+            this.webBrowserMosaic.Url = new System.Uri("http://localhost:3000/worklist", System.UriKind.Absolute);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -588,6 +603,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).EndInit();
             this.tabControlTopLevel.ResumeLayout(false);
             this.tabPageChart.ResumeLayout(false);
+            this.tabPageWorklist.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -635,6 +651,7 @@
         private System.Windows.Forms.TabControl tabControlTopLevel;
         private System.Windows.Forms.TabPage tabPageChart;
         private System.Windows.Forms.TabPage tabPageWorklist;
+        private System.Windows.Forms.WebBrowser webBrowserMosaic;
     }
 }
 

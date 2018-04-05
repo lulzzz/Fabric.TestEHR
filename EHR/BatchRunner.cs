@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -76,8 +77,9 @@ namespace EHR
                         //LoadType = "All",
                     };
 
+                    var content = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
                     // List data response.
-                    response = await client.PostAsJsonAsync("v1/BatchExecutions", body); // Blocking call!
+                    response = await client.PostAsync("v1/BatchExecutions", content); // Blocking call!
                 }
                 else
                 {
@@ -92,7 +94,8 @@ namespace EHR
                     };
 
                     // List data response.
-                    response = await client.PostAsJsonAsync("v1/BatchExecutions", body); // Blocking call!
+                    var content = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
+                    response = await client.PostAsync("v1/BatchExecutions", content); // Blocking call!
                 }
 
                 if (response.IsSuccessStatusCode)

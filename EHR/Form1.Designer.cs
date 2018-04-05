@@ -86,7 +86,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).BeginInit();
             this.tabControlTopLevel.SuspendLayout();
             this.tabPageChart.SuspendLayout();
-            this.tabPageWorklist.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,7 +96,7 @@
             this.webBrowser1.Margin = new System.Windows.Forms.Padding(4);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(27, 25);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(298, 896);
+            this.webBrowser1.Size = new System.Drawing.Size(301, 1042);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
             // 
@@ -131,7 +130,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1622, 1001);
+            this.splitContainer1.Size = new System.Drawing.Size(1610, 1147);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 2;
@@ -153,7 +152,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer2.Size = new System.Drawing.Size(1622, 896);
+            this.splitContainer2.Size = new System.Drawing.Size(1610, 1042);
             this.splitContainer2.SplitterDistance = 100;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 1;
@@ -176,8 +175,8 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.webBrowser1);
             this.splitContainer3.Panel2MinSize = 150;
-            this.splitContainer3.Size = new System.Drawing.Size(1517, 896);
-            this.splitContainer3.SplitterDistance = 1214;
+            this.splitContainer3.Size = new System.Drawing.Size(1505, 1042);
+            this.splitContainer3.SplitterDistance = 1199;
             this.splitContainer3.SplitterWidth = 5;
             this.splitContainer3.TabIndex = 1;
             // 
@@ -191,7 +190,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1214, 896);
+            this.tabControl1.Size = new System.Drawing.Size(1199, 1042);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -202,7 +201,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(1198, 849);
+            this.tabPage1.Size = new System.Drawing.Size(1183, 995);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Medications";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -211,7 +210,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(948, 380);
+            this.label4.Location = new System.Drawing.Point(933, 380);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(239, 25);
@@ -234,7 +233,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(1198, 849);
+            this.tabPage2.Size = new System.Drawing.Size(1183, 907);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Physical Exam";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -261,7 +260,7 @@
             this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage3.Size = new System.Drawing.Size(1198, 849);
+            this.tabPage3.Size = new System.Drawing.Size(1183, 907);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Vitals";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -469,11 +468,11 @@
             // 
             this.tabControlTopLevel.Controls.Add(this.tabPageChart);
             this.tabControlTopLevel.Controls.Add(this.tabPageWorklist);
-            //this.tabControlTopLevel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlTopLevel.Location = new System.Drawing.Point(0, 43);
+            this.tabControlTopLevel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tabControlTopLevel.Location = new System.Drawing.Point(0, -88);
             this.tabControlTopLevel.Name = "tabControlTopLevel";
             this.tabControlTopLevel.SelectedIndex = 0;
-            this.tabControlTopLevel.Size = new System.Drawing.Size(1644, 1054);
+            this.tabControlTopLevel.Size = new System.Drawing.Size(1632, 1200);
             this.tabControlTopLevel.TabIndex = 4;
             // 
             // tabPageChart
@@ -483,21 +482,20 @@
             this.tabPageChart.Location = new System.Drawing.Point(8, 39);
             this.tabPageChart.Name = "tabPageChart";
             this.tabPageChart.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageChart.Size = new System.Drawing.Size(1628, 1007);
+            this.tabPageChart.Size = new System.Drawing.Size(1616, 1153);
             this.tabPageChart.TabIndex = 0;
             this.tabPageChart.Text = "Chart";
             // 
             // tabPageWorklist
             // 
             this.tabPageWorklist.Controls.Add(this.webBrowserMosaic);
+            this.tabPageWorklist.BackColor = System.Drawing.Color.Maroon;
             this.tabPageWorklist.Location = new System.Drawing.Point(8, 39);
-
             this.tabPageWorklist.Name = "tabPageWorklist";
             this.tabPageWorklist.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageWorklist.Size = new System.Drawing.Size(1628, 1007);
+            this.tabPageWorklist.Size = new System.Drawing.Size(1616, 1007);
             this.tabPageWorklist.TabIndex = 1;
             this.tabPageWorklist.Text = "Mosaic";
-            this.tabPageWorklist.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -603,7 +601,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericO2Sat)).EndInit();
             this.tabControlTopLevel.ResumeLayout(false);
             this.tabPageChart.ResumeLayout(false);
-            this.tabPageWorklist.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

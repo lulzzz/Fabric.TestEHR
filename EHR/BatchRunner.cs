@@ -25,6 +25,7 @@ namespace EHR
         {
             using (var client = CreateHttpClient(mdsUrl))
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 var response = await client.GetAsync($"{mdsUrl}/v1/DataMarts?$filter=Name eq '{dataMartName}'");
                 if (response.IsSuccessStatusCode)
                 {
@@ -82,7 +83,7 @@ namespace EHR
 
                     var content = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
                     // List data response.
-                    response = await client.PostAsync("v1/BatchExecutions", content); // Blocking call!
+                    response = await client.PostAsJsonAsync("v1/BatchExecutions", body); // Blocking call!
                 }
                 else
                 {
@@ -98,7 +99,7 @@ namespace EHR
 
                     // List data response.
                     var content = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
-                    response = await client.PostAsync("v1/BatchExecutions", content); // Blocking call!
+                    response = await client.PostAsJsonAsync("v1/BatchExecutions", body); // Blocking call!
                 }
 
                 if (response.IsSuccessStatusCode)

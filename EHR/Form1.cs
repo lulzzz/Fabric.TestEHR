@@ -196,23 +196,38 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
 
             //UpdateFabricPane("calculating");
 
-            await Task.WhenAll(
+            var tasks = new[]
+            {
+
                 _batchRunner.RunBatch("EW Sepsis SAM", Convert.ToInt32(batchDefinitionId))
-                    .ContinueWith(async a =>
+                        .ContinueWith(async a =>
                         {
                             realtimeProgress = 70;
                             return await _batchRunner.WaitForBatch("EW Sepsis SAM", a.Result)
-                                .ContinueWith(b =>
-                                {
-                                    realtimeProgress = 90;
-                                    UpdateFabricPane("load");
-                                    realtimeProgress = 100;
-                                    return 0;
-                                });
+                            .ContinueWith(b =>
+                            {
+                                realtimeProgress = 90;
+                                UpdateFabricPane("load");
+                                realtimeProgress = 100;
+                                return 0;
+                            });
                         }
-                    )
-                , Task.Run(() => LoopToUpdateUI())
-            );
+                        ),
+                Task.Run(() => LoopToUpdateUI())
+            }
+;
+            try
+            {
+                await Task.WhenAll(tasks);
+            }
+            catch (Exception ex)
+            {
+                var exceptions = tasks.Where(t => t.Exception != null)
+                                      .Select(t => t.Exception);
+
+                MessageBox.Show(exceptions.First().ToString());
+                throw;
+            }
 
             //await Task.Run(async () =>
             //{

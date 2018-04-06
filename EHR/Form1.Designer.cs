@@ -31,14 +31,6 @@
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.labelPatientName = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.activityListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findPatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.inboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bookmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();

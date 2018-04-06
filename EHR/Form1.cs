@@ -24,8 +24,9 @@ namespace EHR
         string batchDefinitionId = null;
 
         private static ConsoleLogger _logger = new ConsoleLogger();
-        private readonly BatchRunner _batchRunner = new BatchRunner(_logger);
+        private BatchRunner _batchRunner = new BatchRunner(_logger);
         private Patient _currentPatient;
+        private int realtimeProgress;
 
         public Form1()
         {
@@ -77,8 +78,12 @@ namespace EHR
 
         private async void Form1_Load(object sender, EventArgs e)
         {
+
+            labelStatus.Visible = false;
             webBrowser1.ScrollBarsEnabled = false;
             webBrowserMosaic.ScrollBarsEnabled = false;
+
+            _batchRunner = new BatchRunner(_logger);
 
             // When the form loads, open this web page.
             //webBrowser1.Navigate("http://www.google.com/");
@@ -86,9 +91,30 @@ namespace EHR
 
             SetControlsBasedOnPatient(_patients[0].Name, _patients[0].FacilityAccountId);
 
+            try
+            {
+                await GetDataMartInfo();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                try
+                {
+                    await GetDataMartInfo();
+                }
+                catch (Exception e1)
+                {
+                    Console.WriteLine(e1);
+                    throw;
+                }
+            }
+
+        }
+
+        private async Task GetDataMartInfo()
+        {
             var dataMartIdByName = await _batchRunner.GetDataMartIDByName(ewSepsisDataMartName);
             batchDefinitionId = await _batchRunner.GetBatchDefinitionForDatamart(dataMartIdByName);
-
         }
 
         private void SetControlsBasedOnPatient(string clickedItemText, object clickedItemTag)
@@ -130,6 +156,8 @@ namespace EHR
 
         private async void buttonSaveVitals_Click(object sender, EventArgs e)
         {
+            realtimeProgress = 0;
+
             var o2sat = numericO2Sat.Value;
             var pulse = numericPulse.Value;
             var temp = numericTemp.Value;
@@ -159,21 +187,29 @@ DG1|2||784.0^HEADACHE^I9C||200750816|A
 DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
 
 
-            var server = "localhost";
+            var server = ConfigurationManager.AppSettings["InterfaceEngine"];
             var port = 6661;
             _logger.AddStatus("Sending HL7 message");
             HL7Sender.SendHL7(server, port, hl7Message);
 
-            UpdateFabricPane("calculating");
+            realtimeProgress = 20;
+
+            //UpdateFabricPane("calculating");
 
             await Task.WhenAll(
                 _batchRunner.RunBatch("EW Sepsis SAM", Convert.ToInt32(batchDefinitionId))
                     .ContinueWith(async a =>
-                        await _batchRunner.WaitForBatch("EW Sepsis SAM", a.Result)
-                            .ContinueWith(b => UpdateFabricPane("load"))
-                            //.ContinueWith(b => _batchRunner.RunBatch("ERisk Binding", Convert.ToInt32(singleBindingBatchDefinitionId))
-                            //    .ContinueWith(async c =>
-                            //        await _batchRunner.WaitForBatch("Risk Binding SAM", c.Result)))
+                        {
+                            realtimeProgress = 70;
+                            return await _batchRunner.WaitForBatch("EW Sepsis SAM", a.Result)
+                                .ContinueWith(b =>
+                                {
+                                    realtimeProgress = 90;
+                                    UpdateFabricPane("load");
+                                    realtimeProgress = 100;
+                                    return 0;
+                                });
+                        }
                     )
                 , Task.Run(() => LoopToUpdateUI())
             );
@@ -203,7 +239,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
         {
             var dt = new SqlLoader().LoadPatient(_currentPatient.FacilityAccountId);
 
-            if (dt.Rows.Count > 0)
+            if (dt?.Rows.Count > 0)
             {
                 var row = dt.Rows[0];
 
@@ -218,6 +254,7 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
                     labelLastCalculatedDate.Text = row["LastCalculatedDTS"].ToString();
                     labelLastChecked.Text = now.ToLongTimeString();
                     labelStatus.Text = _logger.GetStatus();
+                    progressBarStatus.Value = realtimeProgress;
                 }), value);
             }
             else
@@ -228,6 +265,8 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
                 {
                     labelLastChecked.Text = now.ToLongTimeString();
                     labelStatus.Text = _logger.GetStatus();
+                    progressBarStatus.Value = realtimeProgress;
+
                 }), value);
 
             }

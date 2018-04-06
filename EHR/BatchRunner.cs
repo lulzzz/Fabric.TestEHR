@@ -33,6 +33,9 @@ namespace EHR
 
                     var id = Convert.ToString(jResponse["value"][0]["Id"]);
                     return id;
+                }else
+                {
+                    throw new Exception($"response: {response.StatusCode} {response}");
                 }
             }
 

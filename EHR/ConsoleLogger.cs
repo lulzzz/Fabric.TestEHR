@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace EHR
 {
@@ -15,6 +16,9 @@ namespace EHR
             return sb.ToString();
         }
 
-
+        internal void Clear()
+        {
+            sb.Clear();
+        }
     }
 }

@@ -79,7 +79,7 @@ namespace EHR
         private async void Form1_Load(object sender, EventArgs e)
         {
 
-            labelStatus.Visible = false;
+            //labelStatus.Visible = false;
             webBrowser1.ScrollBarsEnabled = false;
             webBrowserMosaic.ScrollBarsEnabled = false;
 
@@ -157,6 +157,7 @@ namespace EHR
         private async void buttonSaveVitals_Click(object sender, EventArgs e)
         {
             realtimeProgress = 0;
+            _logger.Clear();
 
             var o2sat = numericO2Sat.Value;
             var pulse = numericPulse.Value;
@@ -312,6 +313,9 @@ DG1|3||781.6^MENINGISMUS^I9C||200750816|A";
             //await RunSingleBinding();
         }
 
+        private void label15_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

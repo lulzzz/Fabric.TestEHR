@@ -142,6 +142,7 @@ namespace EHR
                 string status = "Checking";
                 _logger.AddStatus($"\nChecking if {batchName} SAM is done");
 
+                int i = 0;
                 do
                 {
                     var response = await client.GetAsync($"{dpsUrl}/v1/BatchExecutions({batchExecutionId})");
@@ -152,6 +153,7 @@ namespace EHR
 
                         status = Convert.ToString(jResponse["Status"]);
                         Thread.Sleep(1000);
+                        _logger.AddStatus(Convert.ToString(i++));
                     }
                     else
                     {
